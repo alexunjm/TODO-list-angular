@@ -5,8 +5,7 @@ import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
-    { path: '', loadChildren: () => import('./default-layout/default-layout.module').then(m => m.DefaultLayoutModule) },
-    { path: 'home', redirectTo: '', },
+    { path: '', loadChildren: () => import('../pages/no-auth/generic-layout.module').then(m => m.GenericLayoutModule) },
     { path: '**', redirectTo: '' }
   ] },
 ];
