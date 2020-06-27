@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DefaultLayoutRoutingModule } from './default-layout-routing.module';
-import { DefaultLayoutComponent } from './default-layout.component';
+import { HomeComponent } from './home.component';
 
 
 @NgModule({
-  declarations: [DefaultLayoutComponent],
+  declarations: [HomeComponent],
   imports: [
     CommonModule,
     DefaultLayoutRoutingModule
