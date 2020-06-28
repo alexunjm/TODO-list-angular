@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   template: `
-  <router-outlet></router-outlet>
+  <div class="container mx-auto">
+    <router-outlet></router-outlet>
+  </div>
   `,
   styles: []
 })

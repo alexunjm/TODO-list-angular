@@ -1,3 +1,4 @@
+import { SharedPipesModule } from './../../shared/pipes/shared-pipes.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +10,8 @@ import { UserComponent } from './user.component';
   declarations: [UserComponent],
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    SharedPipesModule
   ]
 })
 export class UserModule { }
