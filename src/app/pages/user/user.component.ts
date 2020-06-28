@@ -45,4 +45,8 @@ export class UserComponent implements OnInit {
     }); */
   }
 
+  handleEdit(item) {
+    console.log({item});
+  }
+
 }

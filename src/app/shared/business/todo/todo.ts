@@ -11,8 +11,15 @@ export interface SortableItem {
   getPriority(): number;
 }
 
+export interface EditableItem extends BasicItem, SortableItem {
+  setName(name: string): void;
+  setDate(date: Date): void;
+  setPriority(p: number): void;
+}
+
 export interface MarkableItem {
   isCompleted(): boolean;
+  setCompleted(val: boolean): void;
 }
 
 export interface ItemDeadline {
@@ -20,7 +27,7 @@ export interface ItemDeadline {
   isOverdue(): boolean;
 }
 
-export interface Item extends BasicItem, MongoItem, SortableItem, MarkableItem, ItemDeadline {
+export interface Item extends MongoItem, EditableItem, MarkableItem, ItemDeadline {
   cloneToJson(): any;
 }
 
@@ -51,8 +58,20 @@ export class ToDoItem implements Item {
   getPriority(): number {
     return this.priority;
   }
+  setName(name: string): void {
+    this.name = name;
+  }
+  setDate(date: Date): void {
+    this.date = date;
+  }
+  setPriority(p: number): void {
+    this.priority = p;
+  }
   isCompleted(): boolean {
     return this.completed;
+  }
+  setCompleted(val: boolean): void {
+    this.completed = val;
   }
   isDueSoon(): boolean {
     return (Date.now() - this.date.getTime()) < (1000 /* ms */ * 60 /* seg */ * 60/* min */);

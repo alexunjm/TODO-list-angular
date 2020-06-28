@@ -16,7 +16,7 @@ export class ToDoListMockService {
         _id: name.split(' ').join(''),
         name,
         priority: Math.floor(Math.random() * 10),
-        completed: Math.floor(Math.random() * 10) % 2,
+        completed: Math.floor(Math.random() * 10) % 2 === 1,
         date: new Date(),
       })
     );

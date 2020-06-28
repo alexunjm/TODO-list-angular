@@ -1,2 +1,2 @@
-export { Item, BasicItem, MongoItem, SortableItem, MarkableItem, ItemDeadline } from './todo/todo';
+export { Item, BasicItem, MongoItem, EditableItem, SortableItem, MarkableItem, ItemDeadline } from './todo/todo';
 export * from './abstract-factory';

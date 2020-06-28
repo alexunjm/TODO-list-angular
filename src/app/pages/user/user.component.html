@@ -1,4 +1,10 @@
 <ul class="list-none">
-  <li *ngFor="let item of toDoList">{{ item.name }}</li>
+  <li *ngFor="let item of toDoList">
+    <app-markable-item [item]="item">
+      <app-editable-item (handleEdit)="handleEdit(item)">
+        {{ item.name }}
+      </app-editable-item>
+    </app-markable-item>
+  </li>
 </ul>
 <app-modal></app-modal>
