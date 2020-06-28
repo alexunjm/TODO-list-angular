@@ -6,8 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', component: GenericLayoutComponent, children: [
     { path: '', loadChildren: () => import('../../pages/no-auth/home/home.module').then(m => m.HomeModule) },
-    { path: 'home', redirectTo: '', },
-    { path: '**', redirectTo: '' }
+    { path: 'inicio', redirectTo: '', },
   ] },
 ];
 
