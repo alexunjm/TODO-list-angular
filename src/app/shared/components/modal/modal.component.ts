@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { EditableItem } from './../../business';
 
@@ -15,6 +15,9 @@ export class ModalComponent implements OnInit {
   @Input()
   data: {title: string};
 
+  @Output()
+  handleCloseEvent: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit(): void {
@@ -22,6 +25,10 @@ export class ModalComponent implements OnInit {
 
   get title() {
     return this.data.title;
+  }
+
+  fireClose() {
+    this.handleCloseEvent.emit({fromCloseButton: true});
   }
 
 }

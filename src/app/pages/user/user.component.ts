@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
 
   constructor(private toDoListService: ToDoListMockService) {
     this.toDoListService.getAll().then(list => this.toDoList = list);
-    this.hideModal()
+    this.hideModal();
   }
 
   ngOnInit(): void {/*
