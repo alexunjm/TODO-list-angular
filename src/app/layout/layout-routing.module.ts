@@ -8,7 +8,7 @@ const routes: Routes = [
     {
       path: '',
       loadChildren: () =>
-        import('../pages/no-auth/home/home.module').then(m => m.HomeModule)
+        import('../pages/user/user.module').then(m => m.UserModule)
     },
     { path: '**', redirectTo: '' }
   ] },
