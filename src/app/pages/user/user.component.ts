@@ -1,7 +1,9 @@
-import { ToDoListMockService } from './../../shared/services';
-import { NmbToArr } from './../../shared/pipes/format/format';
 import { Component, OnInit } from '@angular/core';
+
+import { EditableItem } from './../../shared/business';
 import { Item } from 'src/app/shared/business';
+import { NmbToArr } from './../../shared/pipes/format/format';
+import { ToDoListMockService } from './../../shared/services';
 
 @Component({
   templateUrl: './user.component.html',
@@ -11,8 +13,11 @@ import { Item } from 'src/app/shared/business';
 export class UserComponent implements OnInit {
 
   toDoList: Array<Item>;
+  editable: {title: string, item: EditableItem};
+
   constructor(private toDoListService: ToDoListMockService) {
     this.toDoListService.getAll().then(list => this.toDoList = list);
+    this.hideModal()
   }
 
   ngOnInit(): void {/*
@@ -45,8 +50,13 @@ export class UserComponent implements OnInit {
     }); */
   }
 
+  hideModal() {
+    this.editable = {title: null, item: null};
+  }
+
   handleEdit(item) {
     console.log({item});
+    this.editable = {title: 'Editar tarea', item};
   }
 
 }

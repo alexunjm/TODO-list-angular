@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { EditableItem } from './../../business';
+
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -8,7 +10,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ModalComponent implements OnInit {
 
   @Input()
-  data: {title: string} = {title: null};
+  hidden: boolean = true;
+
+  @Input()
+  data: {title: string};
 
   constructor() { }
 

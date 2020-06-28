@@ -1,4 +1,4 @@
-<div class="static inline-block">
+<div class="static inline-block" *ngIf="!hidden">
   <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
       <div class="flex justify-between bg-gray-300 px-6 py-3">
@@ -9,9 +9,11 @@
       </div>
       <hr />
       <ng-template [ngIf]="title" [ngIfElse]="sample">
+        <ng-content></ng-content>
+        <!--
         <div class="px-6 py-4">
-          <ng-content></ng-content>
         </div>
+         -->
       </ng-template>
       <ng-template #sample >
         <div class="px-6 py-4">
