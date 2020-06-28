@@ -7,11 +7,11 @@ import { Injectable } from '@angular/core';
 export class ToDoListMockService {
 
   factory: AbstractFactory;
-  list: Item[];
+  initialData: Array<any>;
 
   constructor() {
     this.factory = new ToDoListFactory();
-    const data = ['test 1', 'test 2', 'test 3', 'test 4'].map(
+    this.initialData = ['test 1', 'test 2', 'test 3', 'test 4'].map(
       name => ({
         _id: name.split(' ').join(''),
         name,
@@ -20,34 +20,35 @@ export class ToDoListMockService {
         date: new Date(),
       })
     );
-    this.list = this.factory.createItemList(data);
   }
 
   public getAll(): Promise<Item[]> {
-    return Promise.resolve(this.list);
+    return Promise.resolve(this.factory.createItemList(this.initialData));
   }
 
-  public createToDo(elm: any): Promise<Item> {
-    const item = this.factory.createItem(elm);
-    this.list.push(item);
+  public createToDo(elm: any, list2Update: Array<Item>): Promise<Item> {
+    const item = this.factory.createItem({...elm, _id: [elm.name.split(' ')[0], list2Update.length + 1].join('')});
+    list2Update.push(item);
     return Promise.resolve(item);
   }
 
-  public getToDoById(elmId: string): Promise<Item> {
-    return Promise.resolve(this.list.find((elm, index) => elm.getId() === elmId));
+  public getToDoById(elmId: string, list: Array<Item>): Promise<Item> {
+    return Promise.resolve(list.find((elm) => elm.getId() === elmId));
   }
 
-  public updateToDo(elm: Item): Promise<Item[]> {
-    const index = this.list.findIndex((e, i) => e.getId() === elm.getId() ? i : -1);
-    return Promise.resolve(this.factory.createItem(elm)).then(item => {
-      this.list[index] = item;
-      return Promise.resolve(this.list);
+  public updateToDo(elm: any, list2Update: Array<Item>): Promise<number> {
+    const updatedElm = this.factory.createItem(elm);
+    const index = list2Update.findIndex((e) => e.getId() === updatedElm.getId());
+    console.log('----------ToDoListMockService -> updatedElm', {updatedElm, found: list2Update[index], index});
+    return Promise.resolve(updatedElm).then(item => {
+      list2Update[index] = item;
+      return Promise.resolve(index);
     });
   }
 
-  public deleteToDoById(elmId: string): Promise<Item[]> {
-    const index = this.list.findIndex((e, i) => e.getId() === elmId ? i : -1);
-    this.list.splice(index, 1);
-    return Promise.resolve(this.list);
+  public deleteToDoById(elmId: string, list2Update: Array<Item>): Promise<number> {
+    const index = list2Update.findIndex((e) => e.getId() === elmId);
+    list2Update.splice(index, 1);
+    return Promise.resolve(index);
   }
 }

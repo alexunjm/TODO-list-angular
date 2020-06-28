@@ -20,7 +20,9 @@ export interface ItemDeadline {
   isOverdue(): boolean;
 }
 
-export interface Item extends BasicItem, MongoItem, SortableItem, MarkableItem, ItemDeadline {}
+export interface Item extends BasicItem, MongoItem, SortableItem, MarkableItem, ItemDeadline {
+  cloneToJson(): any;
+}
 
 export class ToDoItem implements Item {
   id: string;
@@ -57,5 +59,14 @@ export class ToDoItem implements Item {
   }
   isOverdue(): boolean {
     return Date.now() > this.date.getTime();
+  }
+  cloneToJson() {
+    return {
+      // _id: this.id,
+      name: this.name,
+      priority: this.priority,
+      completed: this.completed,
+      date: this.date,
+    }
   }
 }
