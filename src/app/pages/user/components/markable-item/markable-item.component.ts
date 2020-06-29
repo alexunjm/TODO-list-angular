@@ -19,7 +19,6 @@ export class MarkableItemComponent implements OnInit {
 
   setSelected(event) {
     this.item.setCompleted(event.target.checked);
-    // console.log("MarkableItemComponent -> setSelected -> this.item", {item: this.item, completed: this.item.isCompleted()})
   }
 
 }

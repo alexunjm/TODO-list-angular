@@ -65,6 +65,14 @@ export class UserComponent implements OnInit {
     this.editable = {title: 'Editar tarea', index, item};
   }
 
+  handleDelete(index: number) {
+    console.log("UserComponent -> handleDelete -> index", index);
+    return this.toDoListService.deleteToDoById(
+      this.toDoList[index].getId(),
+      this.toDoList
+    );
+  }
+
   editItemDate(strDate: string) {
     this.editable.item.date = this.dateHelper.dateFromString(strDate, this.editable.item.date);
     // console.log('UserComponent -> editItemDate -> date', {date: this.editable.item.date});

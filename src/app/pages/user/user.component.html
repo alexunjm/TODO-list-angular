@@ -1,10 +1,12 @@
 <ul class="list-none">
   <li *ngFor="let item of toDoList; index as i">
-    <app-markable-item [item]="item">
-      <app-editable-item (handleEdit)="handleEdit(i)">
-        {{ item.name }}
-      </app-editable-item>
-    </app-markable-item>
+    <app-item [item]="item" (handleDelete)="handleDelete(i)">
+      <app-markable-item [item]="item">
+        <app-editable-item (handleEdit)="handleEdit(i)">
+          {{ item.name }}
+        </app-editable-item>
+      </app-markable-item>
+    </app-item>
   </li>
 </ul>
 <div class="flex items-center justify-between">
@@ -18,7 +20,7 @@
 
   <form class="py-6 px-4" *ngIf="editable.item">
     <div class="flex flex-wrap -mx-1 mb-6">
-      <div class="w-full md:w-1/4 px-1 mb-6 md:mb-0">
+      <div class="w-full md:w-1/4 px-1 mb-1 md:mb-0">
         <label
           class="block tracking-wide text-gray-700 text-sm font-bold mb-2"
           for="priority">
@@ -30,7 +32,7 @@
           (blur)="editable.item.priority = $event.target.value"
           [value]="editable.item.priority" >
       </div>
-      <div class="w-full md:w-3/4 px-1 mb-6 md:mb-0">
+      <div class="w-full md:w-3/4 px-1 mb-1 md:mb-0">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
           Name
         </label>
@@ -41,7 +43,7 @@
       </div>
     </div>
     <div class="flex flex-wrap -mx-1 mb-6">
-      <div class="w-full md:w-1/2 px-1">
+      <div class="w-full md:w-1/2 px-1 mb-1 md:mb-0">
         <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="due-date">
           Due Date
         </label>
@@ -50,7 +52,7 @@
           (blur)="editItemDate($event.target.value)"
           [value] ="editable.item.date | date:'yyyy-MM-dd'" >
       </div>
-      <div class="w-full md:w-1/2 px-1">
+      <div class="w-full md:w-1/2 px-1 mb-1 md:mb-0">
         <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="time">
           Time
         </label>
