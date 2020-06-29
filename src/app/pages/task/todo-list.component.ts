@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NmbToArr } from './../../shared/pipes/format/format';
-import { Item } from './../../shared/business';
-import { DateHelperService, ToDoListMockService } from './../../shared/services';
+import { NmbToArr } from '../../shared/pipes/format/format';
+import { Item } from '../../shared/business';
+import { DateHelperService, ToDoListMockService } from '../../shared/services';
 
 @Component({
-  templateUrl: './user.component.html',
+  templateUrl: './todo-list.component.html',
   styles: [],
   providers: [NmbToArr]
 })
-export class UserComponent implements OnInit {
+export class ToDoListComponent implements OnInit {
 
   toDoList: Array<Item>;
   editable: {title: string, index: number, item: any};
@@ -26,27 +26,27 @@ export class UserComponent implements OnInit {
     Promise.resolve().then(() => {
       return this.toDoListService.createToDo(sampleFrom2, this.toDoList);
     }).then((createdItem) => {
-      console.log('UserComponent -> ngOnInit -> createToDo', {createdItem});
+      console.log('ToDoListComponent -> ngOnInit -> createToDo', {createdItem});
       return this.toDoListService.getToDoById(this.toDoList[0].getId(), this.toDoList);
     }).then((found) => {
-      console.log('UserComponent -> ngOnInit -> getToDoById', {found});
+      console.log('ToDoListComponent -> ngOnInit -> getToDoById', {found});
 
       // const lastItem = this.toDoList[this.toDoList.length - 1];
       const lastItem = this.toDoList[1];
-      console.log('UserComponent -> ngOnInit -> lastItem', {lastItem, list: this.toDoList});
+      console.log('ToDoListComponent -> ngOnInit -> lastItem', {lastItem, list: this.toDoList});
 
       return this.toDoListService.updateToDo(
         {...lastItem, _id: lastItem.getId(), name: `(updated) test ${this.toDoList.length}`},
         this.toDoList
       );
     }).then(index => {
-      console.log('UserComponent -> ngOnInit -> updateToDo', {index, list: this.toDoList});
+      console.log('ToDoListComponent -> ngOnInit -> updateToDo', {index, list: this.toDoList});
       return this.toDoListService.deleteToDoById(
         this.toDoList[2].getId(),
         this.toDoList
       );
     }).then(index => {
-      console.log('UserComponent -> ngOnInit -> deleteToDoById', {index, list: this.toDoList});
+      console.log('ToDoListComponent -> ngOnInit -> deleteToDoById', {index, list: this.toDoList});
     }); */
   }
 
@@ -66,7 +66,7 @@ export class UserComponent implements OnInit {
   }
 
   handleDelete(index: number) {
-    // console.log("UserComponent -> handleDelete -> index", index);
+    // console.log("ToDoListComponent -> handleDelete -> index", index);
     return this.toDoListService.deleteToDoById(
       this.toDoList[index].getId(),
       this.toDoList
@@ -75,12 +75,12 @@ export class UserComponent implements OnInit {
 
   editItemDate(strDate: string) {
     this.editable.item.date = this.dateHelper.dateFromString(strDate, this.editable.item.date);
-    // console.log('UserComponent -> editItemDate -> date', {date: this.editable.item.date});
+    // console.log('ToDoListComponent -> editItemDate -> date', {date: this.editable.item.date});
   }
 
   editItemTime(strHM) {
     this.editable.item.date = this.dateHelper.dateFromTimeString(strHM, this.editable.item.date);
-    // console.log('UserComponent -> editItemTime -> date', {date: this.editable.item.date});
+    // console.log('ToDoListComponent -> editItemTime -> date', {date: this.editable.item.date});
   }
 
   saveItem() {
@@ -91,7 +91,7 @@ export class UserComponent implements OnInit {
           this.editable.item,
           this.toDoList
         ).then((createdItem) => {
-          // console.log('UserComponent -> saveItem -> createdItem', {createdItem});
+          // console.log('ToDoListComponent -> saveItem -> createdItem', {createdItem});
           this.hideModal();
           this.saving = false;
         });
@@ -105,7 +105,7 @@ export class UserComponent implements OnInit {
         });
       }
     } catch (error) {
-      console.error('UserComponent -> saveItem -> error', {error});
+      console.error('ToDoListComponent -> saveItem -> error', {error});
       this.saving = false;
     }
   }
