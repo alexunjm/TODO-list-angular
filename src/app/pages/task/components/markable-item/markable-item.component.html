@@ -1,6 +1,6 @@
-<div class="flex items-center">
+<div class="flex items-baseline">
   <ng-template #content><ng-content></ng-content></ng-template>
-  <input class="mr-2 leading-tight" type="checkbox" [checked]="item.isCompleted()" (change)="setSelected($event)">
+  <input class="md:mx-6 mx-3 leading-tight" type="checkbox" [checked]="item.isCompleted()" (change)="setSelected($event)">
   <span class="flex-grow text-sm line-through text-gray-600" [ngClass]="{'line-through': item.isCompleted(), 'text-gray-600': item.isCompleted()}">
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </span>

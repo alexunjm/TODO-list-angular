@@ -1,23 +1,31 @@
+<style>
+  .custom-plus {
+    line-height: 20px;
+    width: 26px;
+    height: 26px;
+    box-sizing: content-box;
+    padding: 12px;
+  }
+</style>
+<h1 class="inline-block align-baseline font-bold text-xl text-gray-500 mx-8 mt-8">
+  Todas las tareas
+</h1>
 <ul class="list-none">
   <li *ngFor="let item of toDoList; index as i">
     <app-item [item]="item" (handleEdit)="handleEdit(i)" (handleDelete)="handleDelete(i)">
       <app-markable-item class="flex-grow" [item]="item">
-        <app-editable-item class="flex" [item]="item" (handleEdit)="handleEdit(i)">
+        <app-editable-item class="flex flex-col-reverse sm:flex-row" [item]="item" (handleEdit)="handleEdit(i)">
         </app-editable-item>
       </app-markable-item>
     </app-item>
   </li>
 </ul>
-<div class="flex items-center justify-between">
-  <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer"
-    (click)="handleCreate()">
-    Agregar una nueva tarea
-  </a>
-</div>
+<a class="custom-plus fixed bottom-0 right-0 m-4 rounded-full bg-blue-400 hover:bg-blue-400 shadow-lg text-5xl text-white cursor-pointer"
+  (click)="handleCreate()">+</a>
 
 <app-modal [data]="editable" [hidden]="!editable.title" (handleCloseEvent)="hideModal()">
 
-  <form class="py-6 px-4" *ngIf="editable.item">
+  <form class="bg-gray-100 py-6 px-4" *ngIf="editable.item">
     <div class="flex flex-wrap -mx-1 mb-6">
       <div class="w-full md:w-1/4 px-1 mb-1 md:mb-0">
         <label
