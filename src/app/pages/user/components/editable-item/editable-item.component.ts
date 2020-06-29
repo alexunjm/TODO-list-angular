@@ -9,6 +9,9 @@ import { EditableItem } from './../../../../shared/business';
 })
 export class EditableItemComponent implements OnInit {
 
+  @Input()
+  item: EditableItem;
+
   @Output()
   handleEdit: EventEmitter<any> = new EventEmitter<any>();
 
@@ -18,7 +21,7 @@ export class EditableItemComponent implements OnInit {
   }
 
   fireEditEvent() {
-    this.handleEdit.emit();
+    this.handleEdit.emit(this.item);
   }
 
 }

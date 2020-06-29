@@ -1,8 +1,10 @@
-<ng-template #content><ng-content></ng-content></ng-template>
-<input class="mr-2 leading-tight" type="checkbox" [checked]="item.isCompleted()" (change)="setSelected($event)">
-<span class="text-sm cursor-pointer line-through text-gray-600" [ngClass]="{'line-through': item.isCompleted(), 'text-gray-600': item.isCompleted()}">
-  <ng-container *ngTemplateOutlet="content"></ng-container>
-</span>
+<div class="flex items-center">
+  <ng-template #content><ng-content></ng-content></ng-template>
+  <input class="mr-2 leading-tight" type="checkbox" [checked]="item.isCompleted()" (change)="setSelected($event)">
+  <span class="flex-grow text-sm line-through text-gray-600" [ngClass]="{'line-through': item.isCompleted(), 'text-gray-600': item.isCompleted()}">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </span>
+</div>
 <!--
 <span class="text-sm line-through" [ngClass]="{'line-through': item.isCompleted()}" *ngIf="item.isCompleted();else unChecked">
   (tachado) <ng-container *ngTemplateOutlet="content"></ng-container>
