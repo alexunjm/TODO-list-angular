@@ -22,6 +22,10 @@ export class ToDoListMockService {
     );
   }
 
+  public createEmtpyToDo(): Item {
+    return this.factory.createItem({});
+  }
+
   public getAll(): Promise<Item[]> {
     return Promise.resolve(this.factory.createItemList(this.initialData));
   }

@@ -39,11 +39,11 @@ export class ToDoItem implements Item {
   date: Date;
 
   constructor(data) {
-    this.id = data._id;
-    this.name = data.name;
-    this.priority = data.priority;
-    this.completed = data.completed;
-    this.date = data.date;
+    this.id = data._id || '';
+    this.name = data.name || '';
+    this.priority = data.priority || 1;
+    this.completed = data.completed || false;
+    this.date = data.date || new Date();
   }
 
   getName(): string {
@@ -86,6 +86,6 @@ export class ToDoItem implements Item {
       priority: this.priority,
       completed: this.completed,
       date: this.date,
-    }
+    };
   }
 }

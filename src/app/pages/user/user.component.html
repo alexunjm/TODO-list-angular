@@ -9,33 +9,44 @@
 </ul>
 <app-modal [data]="editable" [hidden]="!editable.title" (handleCloseEvent)="hideModal()">
 
-  <form class="py-6 px-4">
+  <form class="py-6 px-4" *ngIf="editable.item">
     <div class="flex flex-wrap -mx-1 mb-6">
       <div class="w-full md:w-1/4 px-1 mb-6 md:mb-0">
-        <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="priority">
+        <label
+          class="block tracking-wide text-gray-700 text-sm font-bold mb-2"
+          for="priority">
           Priority
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="priority" type="number" placeholder="1">
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="priority" type="number" [value]="editable.item.priority" placeholder="1">
       </div>
       <div class="w-full md:w-3/4 px-1 mb-6 md:mb-0">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
           Name
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="deploy microservice">
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="name" type="text" [value]="editable.item.name" placeholder="deploy microservice">
       </div>
     </div>
     <div class="flex flex-wrap -mx-1 mb-6">
       <div class="w-full md:w-1/2 px-1">
         <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="due-date">
           Due Date
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="due-date" type="date" placeholder="Doe">
+        </label><!--
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="due-date" type="date" [value] ="editable.item.date | date:'yyyy-MM-dd'" (input)="editItemDate($event.target.value)" placeholder="Doe"> -->
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="due-date" type="date" [value] ="editable.item.date | date:'yyyy-MM-dd'" (blur)="editItemDate($event.target.value)" placeholder="Doe">
       </div>
       <div class="w-full md:w-1/2 px-1">
         <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="time">
           Time
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="time" type="time" placeholder="Doe">
+        </label><!--
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="time" type="time" [value] ="editable.item.date | date:'HH:mm'" (input)="editItemTime($event.target.value)" placeholder="Doe"> -->
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="time" type="time" [value] ="editable.item.date | date:'HH:mm'" (blur)="editItemTime($event.target.value)" placeholder="Doe">
       </div>
     </div>
     <div class="flex items-center justify-end">

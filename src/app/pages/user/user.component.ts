@@ -13,7 +13,7 @@ import { ToDoListMockService } from './../../shared/services';
 export class UserComponent implements OnInit {
 
   toDoList: Array<Item>;
-  editable: {title: string, item: EditableItem};
+  editable: {title: string, item: any};
 
   constructor(private toDoListService: ToDoListMockService) {
     this.toDoListService.getAll().then(list => this.toDoList = list);
@@ -54,9 +54,36 @@ export class UserComponent implements OnInit {
     this.editable = {title: null, item: null};
   }
 
-  handleEdit(item) {
+  handleCreate() {
+    this.editable = {title: 'Editar tarea', item: this.toDoListService.createEmtpyToDo().cloneToJson()};
+    console.log({item: this.editable.item});
+  }
+
+  handleEdit(item: Item) {
     console.log({item});
-    this.editable = {title: 'Editar tarea', item};
+    this.editable = {title: 'Editar tarea', item: item.cloneToJson()};
+  }
+
+  editItemDate(strDate: string) {
+    const timeZoneOffset = new Date().getTimezoneOffset() / 60;
+    const [year, month, day] = strDate.split('-').map((str: string) => Number(str));
+    let hours = this.editable.item.date.getUTCHours();
+    hours = hours < timeZoneOffset ? hours + 24 : hours;
+    const min = this.editable.item.date.getUTCMinutes();
+    const date = new Date(Date.UTC(year, month - 1, day, hours, min));
+    this.editable.item.date = date;
+    console.log("UserComponent -> editItemDate -> date", date);
+  }
+
+  editItemTime(strHM) {
+    const timeZoneOffset = new Date().getTimezoneOffset() / 60;
+    const [hours, min] = strHM.split(':').map((str: string) => Number(str));
+    const year = this.editable.item.date.getFullYear();
+    const month = this.editable.item.date.getMonth();
+    const day = this.editable.item.date.getDate();
+    const date = new Date(Date.UTC(year, month, day, hours + timeZoneOffset, min));
+    this.editable.item.date = date;
+    console.log("UserComponent -> editItemTime -> date", date);
   }
 
 }
