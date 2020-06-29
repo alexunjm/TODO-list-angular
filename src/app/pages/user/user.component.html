@@ -7,6 +7,13 @@
     </app-markable-item>
   </li>
 </ul>
+<div class="flex items-center justify-between">
+  <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer"
+    (click)="handleCreate()">
+    Agregar una nueva tarea
+  </a>
+</div>
+
 <app-modal [data]="editable" [hidden]="!editable.title" (handleCloseEvent)="hideModal()">
 
   <form class="py-6 px-4" *ngIf="editable.item">

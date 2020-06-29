@@ -31,7 +31,7 @@ export class ToDoListMockService {
   }
 
   public createToDo(elm: any, list2Update: Array<Item>): Promise<Item> {
-    const item = this.factory.createItem({...elm, _id: [elm.name.split(' ')[0], list2Update.length + 1].join('')});
+    const item = this.factory.createItem({...elm, _id: [list2Update.length + 1, Math.floor(Math.random() * 1000)].join('_')});
     list2Update.push(item);
     return Promise.resolve(item);
   }

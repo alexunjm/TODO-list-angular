@@ -51,11 +51,11 @@ export class UserComponent implements OnInit {
   }
 
   hideModal() {
-    this.editable = {title: null, index: null, item: null};
+    this.editable = {title: null, index: -1, item: null};
   }
 
   handleCreate() {
-    this.editable = {title: 'Crear tarea', index: null, item: this.toDoListService.createEmptyToDo().cloneToJson()};
+    this.editable = {title: 'Crear tarea', index: -1, item: this.toDoListService.createEmptyToDo().cloneToJson()};
     console.log({item: this.editable.item});
   }
 
@@ -76,16 +76,30 @@ export class UserComponent implements OnInit {
   }
 
   saveItem() {
-    // console.log('guardando los cambios...', {old: this.toDoList[this.editable.index], new: this.editable.item});
-    this.saving = true;
-    this.toDoListService.updateToDo(
-      {...this.editable.item, _id: this.toDoList[this.editable.index].getId()},
-      this.toDoList
-    ).then(index => {
-      // console.log('UserComponent -> saveItem -> index', index);
-      this.hideModal();
+    try {
+      this.saving = true;
+      if (this.editable.index < 0) {
+        this.toDoListService.createToDo(
+          this.editable.item,
+          this.toDoList
+        ).then((createdItem) => {
+          console.log('UserComponent -> saveItem -> createdItem', {createdItem});
+          this.hideModal();
+          this.saving = false;
+        });
+      } else {
+        this.toDoListService.updateToDo(
+          {...this.editable.item, _id: this.toDoList[this.editable.index].getId()},
+          this.toDoList
+        ).then(index => {
+          this.hideModal();
+          this.saving = false;
+        });
+      }
+    } catch (error) {
+      console.error('UserComponent -> saveItem -> error', {error});
       this.saving = false;
-    });
+    }
   }
 
 }
