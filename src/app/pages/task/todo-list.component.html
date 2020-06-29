@@ -1,15 +1,22 @@
 <style>
+  .task-header > h1 {
+    letter-spacing: 2px;
+  }
   .custom-plus {
-    line-height: 20px;
-    width: 26px;
-    height: 26px;
+    line-height: 0px;
     box-sizing: content-box;
-    padding: 12px;
+    padding: 0 16px 4px;
   }
 </style>
-<h1 class="inline-block align-baseline font-bold text-xl text-gray-500 mx-8 mt-8">
-  Todas las tareas
-</h1>
+
+<div class="task-header relative mb-5">
+  <h1 class="text-right align-baseline font-bold text-xl text-gray-700 mx-8 mt-8">
+    Tareas
+  </h1>
+  <hr>
+  <a class="custom-plus sticky bottom-0 right-0 m-4 rounded-full bg-blue-400 hover:bg-blue-400 shadow-lg text-5xl text-white cursor-pointer"
+  (click)="handleCreate()">+</a>
+</div>
 <ul class="list-none">
   <li *ngFor="let item of toDoList; index as i">
     <app-item [item]="item" (handleEdit)="handleEdit(i)" (handleDelete)="handleDelete(i)">
@@ -20,8 +27,6 @@
     </app-item>
   </li>
 </ul>
-<a class="custom-plus fixed bottom-0 right-0 m-4 rounded-full bg-blue-400 hover:bg-blue-400 shadow-lg text-5xl text-white cursor-pointer"
-  (click)="handleCreate()">+</a>
 
 <app-modal [data]="editable" [hidden]="!editable.title" (handleCloseEvent)="hideModal()">
 

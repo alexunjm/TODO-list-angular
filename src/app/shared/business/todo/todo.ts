@@ -1,20 +1,16 @@
-export interface BasicItem {
-  getName(): string;
-  getDate(): Date;
-}
-
 export interface MongoItem {
   getId(): string;
 }
 
-export interface SortableItem {
-  getPriority(): number;
+export interface BasicItem {
+  getName(): string;
+  getDate(): Date;
+  getCreatedAt(): Date;
+  getUpdatedAt(): Date;
 }
 
-export interface EditableItem extends BasicItem, SortableItem {
-  setName(name: string): void;
-  setDate(date: Date): void;
-  setPriority(p: number): void;
+export interface SortableItem {
+  getPriority(): number;
 }
 
 export interface MarkableItem {
@@ -22,12 +18,20 @@ export interface MarkableItem {
   setCompleted(val: boolean): void;
 }
 
+export interface EditableItem extends BasicItem, MarkableItem, SortableItem {
+  setName(name: string): void;
+  setDate(date: Date): void;
+  setPriority(p: number): void;
+  setCreatedAt(p: Date): void;
+  setUpdatedAt(p: Date): void;
+}
+
 export interface ItemDeadline {
   isDueSoon(): boolean;
   isOverdue(): boolean;
 }
 
-export interface Item extends MongoItem, EditableItem, MarkableItem, ItemDeadline {
+export interface Item extends MongoItem, EditableItem, ItemDeadline {
   cloneToJson(): any;
 }
 
@@ -37,6 +41,8 @@ export class ToDoItem implements Item {
   priority: number;
   completed: boolean;
   date: Date;
+  createdAt: Date;
+  updatedAt: Date;
 
   constructor(data) {
     this.id = data._id || '';
@@ -44,6 +50,25 @@ export class ToDoItem implements Item {
     this.priority = data.priority || 1;
     this.completed = data.completed || false;
     this.date = data.date || new Date();
+    this.createdAt = data.createdAt || new Date();
+    this.updatedAt = data.updatedAt || new Date();
+  }
+
+  getId(): string {
+    return this.id;
+  }
+
+  setCreatedAt(date: Date): void {
+    this.createdAt = date;
+  }
+  setUpdatedAt(date: Date): void {
+    this.updatedAt = date;
+  }
+  getCreatedAt(): Date {
+    return this.createdAt;
+  }
+  getUpdatedAt(): Date {
+    return this.updatedAt;
   }
 
   getName(): string {
@@ -52,9 +77,7 @@ export class ToDoItem implements Item {
   getDate(): Date {
     return this.date;
   }
-  getId(): string {
-    return this.id;
-  }
+
   getPriority(): number {
     return this.priority;
   }
