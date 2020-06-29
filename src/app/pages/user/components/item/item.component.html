@@ -1,4 +1,4 @@
 <div class="md:justify-between md:flex-row flex flex-col-reverse bg-white transition-all duration-150 ease-in-out hover:shadow-md rounded-lg p-4 m-2">
   <ng-content></ng-content>
-  <app-options class="self-end" (handleDelete)="optionDelete()"></app-options>
+  <app-options class="self-end" (handleEdit)="optionEdit()" (handleDelete)="optionDelete()"></app-options>
 </div>

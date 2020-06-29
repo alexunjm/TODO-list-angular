@@ -1,6 +1,6 @@
 <ul class="list-none">
   <li *ngFor="let item of toDoList; index as i">
-    <app-item [item]="item" (handleDelete)="handleDelete(i)">
+    <app-item [item]="item" (handleEdit)="handleEdit(i)" (handleDelete)="handleDelete(i)">
       <app-markable-item [item]="item">
         <app-editable-item (handleEdit)="handleEdit(i)">
           {{ item.name }}

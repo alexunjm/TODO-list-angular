@@ -66,7 +66,7 @@ export class UserComponent implements OnInit {
   }
 
   handleDelete(index: number) {
-    console.log("UserComponent -> handleDelete -> index", index);
+    // console.log("UserComponent -> handleDelete -> index", index);
     return this.toDoListService.deleteToDoById(
       this.toDoList[index].getId(),
       this.toDoList
@@ -91,7 +91,7 @@ export class UserComponent implements OnInit {
           this.editable.item,
           this.toDoList
         ).then((createdItem) => {
-          console.log('UserComponent -> saveItem -> createdItem', {createdItem});
+          // console.log('UserComponent -> saveItem -> createdItem', {createdItem});
           this.hideModal();
           this.saving = false;
         });

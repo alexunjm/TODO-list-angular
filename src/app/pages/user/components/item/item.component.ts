@@ -13,11 +13,17 @@ export class ItemComponent implements OnInit {
   item: Item;
 
   @Output()
+  handleEdit: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
   handleDelete: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  optionEdit() {
+    this.handleEdit.emit(this.item);
   }
 
   optionDelete() {
