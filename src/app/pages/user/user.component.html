@@ -1,7 +1,7 @@
 <ul class="list-none">
-  <li *ngFor="let item of toDoList">
+  <li *ngFor="let item of toDoList; index as i">
     <app-markable-item [item]="item">
-      <app-editable-item (handleEdit)="handleEdit(item)">
+      <app-editable-item (handleEdit)="handleEdit(i)">
         {{ item.name }}
       </app-editable-item>
     </app-markable-item>
@@ -19,14 +19,18 @@
         </label>
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="priority" type="number" [value]="editable.item.priority" placeholder="1">
+          id="priority" type="number" placeholder="1"
+          (blur)="editable.item.priority = $event.target.value"
+          [value]="editable.item.priority" >
       </div>
       <div class="w-full md:w-3/4 px-1 mb-6 md:mb-0">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
           Name
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="name" type="text" [value]="editable.item.name" placeholder="deploy microservice">
+          id="name" type="text" placeholder="deploy microservice"
+          (blur)="editable.item.name = $event.target.value"
+          [value]="editable.item.name" >
       </div>
     </div>
     <div class="flex flex-wrap -mx-1 mb-6">
@@ -50,7 +54,7 @@
       </div>
     </div>
     <div class="flex items-center justify-end">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="saveItem()">
         Save
       </button>
     </div>

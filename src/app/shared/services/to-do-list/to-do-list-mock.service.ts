@@ -22,7 +22,7 @@ export class ToDoListMockService {
     );
   }
 
-  public createEmtpyToDo(): Item {
+  public createEmptyToDo(): Item {
     return this.factory.createItem({});
   }
 

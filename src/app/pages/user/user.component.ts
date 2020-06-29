@@ -1,3 +1,4 @@
+import { DateHelperService } from './../../shared/services/date/date-helper.service';
 import { Component, OnInit } from '@angular/core';
 
 import { EditableItem } from './../../shared/business';
@@ -13,9 +14,9 @@ import { ToDoListMockService } from './../../shared/services';
 export class UserComponent implements OnInit {
 
   toDoList: Array<Item>;
-  editable: {title: string, item: any};
+  editable: {title: string, index: number, item: any};
 
-  constructor(private toDoListService: ToDoListMockService) {
+  constructor(private toDoListService: ToDoListMockService, private dateHelper: DateHelperService) {
     this.toDoListService.getAll().then(list => this.toDoList = list);
     this.hideModal();
   }
@@ -51,39 +52,37 @@ export class UserComponent implements OnInit {
   }
 
   hideModal() {
-    this.editable = {title: null, item: null};
+    this.editable = {title: null, index: null, item: null};
   }
 
   handleCreate() {
-    this.editable = {title: 'Editar tarea', item: this.toDoListService.createEmtpyToDo().cloneToJson()};
+    this.editable = {title: 'Crear tarea', index: null, item: this.toDoListService.createEmptyToDo().cloneToJson()};
     console.log({item: this.editable.item});
   }
 
-  handleEdit(item: Item) {
+  handleEdit(index: number) {
+    const item = this.toDoList[index].cloneToJson();
     console.log({item});
-    this.editable = {title: 'Editar tarea', item: item.cloneToJson()};
+    this.editable = {title: 'Editar tarea', index, item};
   }
 
   editItemDate(strDate: string) {
-    const timeZoneOffset = new Date().getTimezoneOffset() / 60;
-    const [year, month, day] = strDate.split('-').map((str: string) => Number(str));
-    let hours = this.editable.item.date.getUTCHours();
-    hours = hours < timeZoneOffset ? hours + 24 : hours;
-    const min = this.editable.item.date.getUTCMinutes();
-    const date = new Date(Date.UTC(year, month - 1, day, hours, min));
-    this.editable.item.date = date;
-    console.log("UserComponent -> editItemDate -> date", date);
+    this.editable.item.date = this.dateHelper.dateFromString(strDate, this.editable.item.date);
+    // console.log('UserComponent -> editItemDate -> date', {date: this.editable.item.date});
   }
 
   editItemTime(strHM) {
-    const timeZoneOffset = new Date().getTimezoneOffset() / 60;
-    const [hours, min] = strHM.split(':').map((str: string) => Number(str));
-    const year = this.editable.item.date.getFullYear();
-    const month = this.editable.item.date.getMonth();
-    const day = this.editable.item.date.getDate();
-    const date = new Date(Date.UTC(year, month, day, hours + timeZoneOffset, min));
-    this.editable.item.date = date;
-    console.log("UserComponent -> editItemTime -> date", date);
+    this.editable.item.date = this.dateHelper.dateFromTimeString(strHM, this.editable.item.date);
+    // console.log('UserComponent -> editItemTime -> date', {date: this.editable.item.date});
+  }
+
+  saveItem() {
+    console.log('guardando los cambios...', {old: this.toDoList[this.editable.index], new: this.editable.item});
+
+    this.toDoListService.updateToDo(
+      {...this.editable.item, _id: this.toDoList[this.editable.index].getId()},
+      this.toDoList
+    ).then(console.log);
   }
 
 }
