@@ -1,10 +1,8 @@
-import { DateHelperService } from './../../shared/services/date/date-helper.service';
 import { Component, OnInit } from '@angular/core';
 
-import { EditableItem } from './../../shared/business';
-import { Item } from 'src/app/shared/business';
 import { NmbToArr } from './../../shared/pipes/format/format';
-import { ToDoListMockService } from './../../shared/services';
+import { Item } from './../../shared/business';
+import { DateHelperService, ToDoListMockService } from './../../shared/services';
 
 @Component({
   templateUrl: './user.component.html',
@@ -15,6 +13,7 @@ export class UserComponent implements OnInit {
 
   toDoList: Array<Item>;
   editable: {title: string, index: number, item: any};
+  saving = false;
 
   constructor(private toDoListService: ToDoListMockService, private dateHelper: DateHelperService) {
     this.toDoListService.getAll().then(list => this.toDoList = list);
@@ -62,7 +61,7 @@ export class UserComponent implements OnInit {
 
   handleEdit(index: number) {
     const item = this.toDoList[index].cloneToJson();
-    console.log({item});
+    // console.log({item});
     this.editable = {title: 'Editar tarea', index, item};
   }
 
@@ -77,12 +76,16 @@ export class UserComponent implements OnInit {
   }
 
   saveItem() {
-    console.log('guardando los cambios...', {old: this.toDoList[this.editable.index], new: this.editable.item});
-
+    // console.log('guardando los cambios...', {old: this.toDoList[this.editable.index], new: this.editable.item});
+    this.saving = true;
     this.toDoListService.updateToDo(
       {...this.editable.item, _id: this.toDoList[this.editable.index].getId()},
       this.toDoList
-    ).then(console.log);
+    ).then(index => {
+      // console.log('UserComponent -> saveItem -> index', index);
+      this.hideModal();
+      this.saving = false;
+    });
   }
 
 }

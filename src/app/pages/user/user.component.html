@@ -37,24 +37,25 @@
       <div class="w-full md:w-1/2 px-1">
         <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="due-date">
           Due Date
-        </label><!--
+        </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="due-date" type="date" [value] ="editable.item.date | date:'yyyy-MM-dd'" (input)="editItemDate($event.target.value)" placeholder="Doe"> -->
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="due-date" type="date" [value] ="editable.item.date | date:'yyyy-MM-dd'" (blur)="editItemDate($event.target.value)" placeholder="Doe">
+          id="due-date" type="date" placeholder="Doe"
+          (blur)="editItemDate($event.target.value)"
+          [value] ="editable.item.date | date:'yyyy-MM-dd'" >
       </div>
       <div class="w-full md:w-1/2 px-1">
         <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="time">
           Time
-        </label><!--
+        </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="time" type="time" [value] ="editable.item.date | date:'HH:mm'" (input)="editItemTime($event.target.value)" placeholder="Doe"> -->
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="time" type="time" [value] ="editable.item.date | date:'HH:mm'" (blur)="editItemTime($event.target.value)" placeholder="Doe">
+          id="time" type="time" placeholder="Doe"
+          (blur)="editItemTime($event.target.value)"
+          [value] ="editable.item.date | date:'HH:mm'" >
       </div>
     </div>
     <div class="flex items-center justify-end">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="saveItem()">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button" (click)="saveItem()" [disabled]="saving">
         Save
       </button>
     </div>
