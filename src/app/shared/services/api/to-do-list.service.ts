@@ -13,7 +13,7 @@ class TaskListService extends TaskListAbstract {
   }
 
   getAll(): Promise<Item[]> {
-    return this.apiService.get('to-do-list').then(response => {
+    return this.apiService.get('task/all').then(response => {
       // return Promise.resolve(this.sortItemList(this.factory.createItemList(response['data']), 'priority|-1'));
       return Promise.resolve(
         this.factory.createItemList(response['data'])
@@ -26,7 +26,7 @@ class TaskListService extends TaskListAbstract {
   }
 
   createToDo(elm: any, list2Update: Item[]): Promise<Item> {
-    return this.apiService.post('task/create', elm).then(response => {
+    return this.apiService.post('task/create', {task: elm}).then(response => {
       const item = this.factory.createItem(response['data']);
       list2Update.splice(0, 0, item);
       return Promise.resolve(item);
@@ -37,7 +37,7 @@ class TaskListService extends TaskListAbstract {
   }
 
   getToDoById(id: string, list: Item[]): Promise<Item> {
-    return this.apiService.get('task/get', {id}).then(response => {
+    return this.apiService.get(`task/get/${id}`).then(response => {
       const item = this.factory.createItem(response['data']);
       return Promise.resolve(item);
     }).catch(err => {
@@ -47,10 +47,11 @@ class TaskListService extends TaskListAbstract {
   }
 
   updateToDo(elm: any, list2Update: Item[]): Promise<number> {
-    return this.apiService.post('task/update', elm).then(response => {
+    return this.apiService.post(`task/update/${elm._id}`, {task: elm}).then(response => {
       const item = this.factory.createItem(response['data']);
-      list2Update.splice(0, 0, item);
-      return Promise.resolve(0);
+      const index = list2Update.findIndex((e) => e.getId() === elm._id);
+      list2Update.splice(index, 1, item);
+      return Promise.resolve(index);
     }).catch(err => {
       console.log('TaskListService -> updateToDo -> err', {err});
       return Promise.resolve(-1);
@@ -58,7 +59,8 @@ class TaskListService extends TaskListAbstract {
   }
 
   deleteToDoById(id: string, list: Item[]): Promise<number> {
-    return this.apiService.post('task/delete', {id}).then(response => {
+    return this.apiService.delete(`task/delete/${id}`).then(response => {
+      console.log('deleteToDoById -> response message', {response});
       const index = list.findIndex((e) => e.getId() === id);
       list.splice(index, 1);
       return Promise.resolve(index);

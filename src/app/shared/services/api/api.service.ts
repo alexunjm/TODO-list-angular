@@ -59,12 +59,12 @@ export class ApiService {
 
   put(endpoint: string, body: any, reqOpts?: any) {
     reqOpts = this.getReqOpts(reqOpts);
-    return this.http.put(this.url + '/' + endpoint, this.wrap(body), reqOpts);
+    return this.http.put(this.url + '/' + endpoint, this.wrap(body), reqOpts).toPromise();
   }
 
   delete(endpoint: string, reqOpts?: any) {
     reqOpts = this.getReqOpts(reqOpts);
-    return this.http.delete(this.url + '/' + endpoint, reqOpts);
+    return this.http.delete(this.url + '/' + endpoint, reqOpts).toPromise();
   }
 
   patch(endpoint: string, body: any, reqOpts?: any) {
