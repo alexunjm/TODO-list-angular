@@ -9,9 +9,9 @@
         id="name"
         type="text"
         placeholder="John Doe"
-        [ngClass]="{'border-red-500': !valid.name && !user.name}"
+        [ngClass]="{'border-red-500': !valid.name}"
         (input)="user.name = $event.target.value">
-      <p class="text-red-500 text-xs italic" *ngIf="!valid.name && !user.name">Por favor ingresa tu nombre.</p>
+      <p class="text-red-500 text-xs italic" *ngIf="!valid.name">Por favor ingresa un nombre sin espacios.</p>
     </div>
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
@@ -21,9 +21,9 @@
         id="email"
         type="email"
         placeholder="jdoe@example.com"
-        [ngClass]="{'border-red-500': !valid.email && !user.email}"
+        [ngClass]="{'border-red-500': !valid.email}"
         (input)="user.email = $event.target.value">
-      <p class="text-red-500 text-xs italic" *ngIf="!valid.email && !user.email">Por favor ingresa tu correo electrónico.</p>
+      <p class="text-red-500 text-xs italic" *ngIf="!valid.email">Por favor ingresa tu correo electrónico.</p>
     </div>
     <div class="mb-6">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
@@ -33,9 +33,9 @@
         id="password"
         type="password"
         placeholder="******************"
-        [ngClass]="{'border-red-500': !valid.pass && !user.pass}"
+        [ngClass]="{'border-red-500': !valid.pass}"
         (input)="user.pass = $event.target.value">
-      <p class="text-red-500 text-xs italic" *ngIf="!valid.pass && !user.pass">Por favor elige una contraseña.</p>
+      <p class="text-red-500 text-xs italic" *ngIf="!valid.pass">Por favor elige una contraseña.</p>
     </div>
     <div class="flex items-center justify-between">
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

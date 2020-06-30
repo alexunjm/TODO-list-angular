@@ -27,14 +27,23 @@ export class SignUpComponent implements OnInit {
   }
 
   signIn() {
-    this.valid.all = true;
+    for (const key in this.valid) {
+      if (this.valid.hasOwnProperty(key)) {
+        this.valid[key] = true;
+      }
+    }
+
     // tslint:disable-next-line: max-line-length
     const validEmailRegex = RegExp(/^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/i)
     if (!validEmailRegex.test(this.user.email)) {
       this.valid.email = false;
       this.valid.all = false;
     }
-    if (!(this.user.name && this.user.name.length > 0)) {
+    if (!(
+      this.user.name
+      && this.user.name.length > 0
+      && this.user.name.indexOf(' ') < 0
+      )) {
       this.valid.name = false;
       this.valid.all = false;
     }

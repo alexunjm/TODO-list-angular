@@ -1,3 +1,4 @@
+import { AuthService } from './../../../shared/services/api/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,17 +9,21 @@ export class HomeComponent implements OnInit {
 
   signUp: boolean;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
   signUpOption(user) {
-    console.log("HomeComponent -> signUpOption -> user", user);
+    this.authService.singUp(user).then(response => {
+      console.log("HomeComponent -> signUpOption -> user", {user, response});
+    }).catch(console.error);
   }
 
   signInOption(user) {
-    console.log("HomeComponent -> signInOption -> user", user);
+    this.authService.singIn(user).then(response => {
+      console.log("HomeComponent -> signInOption -> user", {user, response});
+    }).catch(console.error);
   }
 
 }
