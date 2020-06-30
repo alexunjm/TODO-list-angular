@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 /**
  * @author Alexander Jaramillo <contacto@alexanderjaramillo.com>
  */
-@Injectable()
-export class StorageProvider {
+@Injectable({
+  providedIn: 'root'
+})
+export class LStorageService {
 
   constructor() {
-    // console.log('Hello StorageProvider Provider');
+    // console.log('Hello LStorageService Provider');
   }
 
   clear() {

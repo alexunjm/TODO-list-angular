@@ -1,1 +1,1 @@
-export * from './storage.provider';
+export * from './l-storage.service';
