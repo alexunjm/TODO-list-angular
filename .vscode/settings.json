@@ -7,6 +7,16 @@
         {
             "name": "release/structure",
             "base": "develop"
+        },
+        {
+            "name": "release/api-server",
+            "base": "develop"
+        }
+    ],
+    "gitflow4code.features": [
+        {
+            "name": "feature/todo-list",
+            "base": "develop"
         }
     ]
 }
