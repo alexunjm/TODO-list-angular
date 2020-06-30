@@ -32,7 +32,7 @@ export interface ItemDeadline {
 }
 
 export interface Item extends MongoItem, EditableItem, ItemDeadline {
-  cloneToJson(): any;
+  cloneToJson(copy?: boolean): any;
 }
 
 export class ToDoItem implements Item {
@@ -45,7 +45,7 @@ export class ToDoItem implements Item {
   updatedAt: Date;
 
   constructor(data) {
-    this.id = data._id || '';
+    this.id = data.id || '';
     this.name = data.name || '';
     this.priority = data.priority || 1;
     this.completed = data.completed || false;
@@ -102,13 +102,13 @@ export class ToDoItem implements Item {
   isOverdue(): boolean {
     return Date.now() > this.date.getTime();
   }
-  cloneToJson() {
-    return {
-      // _id: this.id,
+  cloneToJson(copy = false) {
+    const clone = {
       name: this.name,
       priority: this.priority,
       completed: this.completed,
       date: this.date,
     };
+    return copy ? {id: this.id, ...clone} : clone;
   }
 }

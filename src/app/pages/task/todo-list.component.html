@@ -20,7 +20,7 @@
 <ul class="list-none">
   <li *ngFor="let item of toDoList; index as i">
     <app-item [item]="item" (handleEdit)="handleEdit(i)" (handleDelete)="handleDelete(i)">
-      <app-markable-item class="flex-grow" [item]="item">
+      <app-markable-item class="flex-grow" (fireEdit)="saveItem(i ,item)" [item]="item">
         <app-editable-item class="flex flex-col-reverse sm:flex-row" [item]="item" (handleEdit)="handleEdit(i)">
         </app-editable-item>
       </app-markable-item>
@@ -76,7 +76,7 @@
     </div>
     <div class="flex items-center justify-end">
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="button" (click)="saveItem()" [disabled]="saving">
+        type="button" (click)="handleSaveItem()" [disabled]="saving">
         Save
       </button>
     </div>

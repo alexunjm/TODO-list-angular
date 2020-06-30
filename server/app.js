@@ -1,11 +1,7 @@
-var http = require('http'),
-    path = require('path'),
-    methods = require('methods'),
-    express = require('express'),
+var express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     cors = require('cors'),
-    passport = require('passport'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose');
 
@@ -37,8 +33,7 @@ if(isProduction){
 }
 
 require('./models/User');
-require('./models/Article');
-require('./models/Comment');
+require('./models/TaskModel');
 require('./config/passport');
 
 app.use(require('./routes'));

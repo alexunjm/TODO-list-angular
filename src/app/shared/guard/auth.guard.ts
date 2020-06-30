@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
-import { LStorageService/* , ApiProvider */ } from '../services';
+import { LStorageService } from '../services';
 import { AuthService } from '../services/api/auth.service';
 
 @Injectable()

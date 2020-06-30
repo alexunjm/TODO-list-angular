@@ -1,4 +1,4 @@
-var router = require('express').Router();
+/* var router = require('express').Router();
 var mongoose = require('mongoose');
 var Article = mongoose.model('Article');
 var Comment = mongoose.model('Comment');
@@ -277,3 +277,4 @@ router.delete('/:article/comments/:comment', auth.required, function(req, res, n
 });
 
 module.exports = router;
+ */

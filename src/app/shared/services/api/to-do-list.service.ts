@@ -47,6 +47,7 @@ class TaskListService extends TaskListAbstract {
   }
 
   updateToDo(elm: any, list2Update: Item[]): Promise<number> {
+    // console.log('updateToDo -> elm._id', {elm, list2Update});
     return this.apiService.post(`task/update/${elm._id}`, {task: elm}).then(response => {
       const item = this.factory.createItem(response['data']);
       const index = list2Update.findIndex((e) => e.getId() === elm._id);
@@ -59,8 +60,8 @@ class TaskListService extends TaskListAbstract {
   }
 
   deleteToDoById(id: string, list: Item[]): Promise<number> {
+    // console.log('deleteToDoById -> id', {id, list});
     return this.apiService.delete(`task/delete/${id}`).then(response => {
-      console.log('deleteToDoById -> response message', {response});
       const index = list.findIndex((e) => e.getId() === id);
       list.splice(index, 1);
       return Promise.resolve(index);

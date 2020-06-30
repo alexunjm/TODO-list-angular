@@ -1,4 +1,4 @@
-var router = require('express').Router();
+/* var router = require('express').Router();
 var mongoose = require('mongoose');
 var Article = mongoose.model('Article');
 
@@ -10,3 +10,4 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+ */
