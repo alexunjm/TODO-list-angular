@@ -12,6 +12,9 @@ export class MarkableItemComponent implements OnInit {
   @Input()
   item: MarkableItem;
 
+  @Output()
+  fireEdit: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit(): void {
@@ -19,6 +22,7 @@ export class MarkableItemComponent implements OnInit {
 
   setSelected(event) {
     this.item.setCompleted(event.target.checked);
+    this.fireEdit.emit(this.item.isCompleted());
   }
 
 }

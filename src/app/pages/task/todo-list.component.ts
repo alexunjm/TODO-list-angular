@@ -21,35 +21,7 @@ export class ToDoListComponent implements OnInit {
     this.hideModal();
   }
 
-  ngOnInit(): void {/*
-    const sampleFrom2 = this.toDoList[2].cloneToJson();
-
-    Promise.resolve().then(() => {
-      return this.toDoListService.createToDo(sampleFrom2, this.toDoList);
-    }).then((createdItem) => {
-      console.log('ToDoListComponent -> ngOnInit -> createToDo', {createdItem});
-      return this.toDoListService.getToDoById(this.toDoList[0].getId(), this.toDoList);
-    }).then((found) => {
-      console.log('ToDoListComponent -> ngOnInit -> getToDoById', {found});
-
-      // const lastItem = this.toDoList[this.toDoList.length - 1];
-      const lastItem = this.toDoList[1];
-      console.log('ToDoListComponent -> ngOnInit -> lastItem', {lastItem, list: this.toDoList});
-
-      return this.toDoListService.updateToDo(
-        {...lastItem, _id: lastItem.getId(), name: `(updated) test ${this.toDoList.length}`},
-        this.toDoList
-      );
-    }).then(index => {
-      console.log('ToDoListComponent -> ngOnInit -> updateToDo', {index, list: this.toDoList});
-      return this.toDoListService.deleteToDoById(
-        this.toDoList[2].getId(),
-        this.toDoList
-      );
-    }).then(index => {
-      console.log('ToDoListComponent -> ngOnInit -> deleteToDoById', {index, list: this.toDoList});
-    }); */
-  }
+  ngOnInit(): void { }
 
   hideModal() {
     this.editable = {title: null, index: -1, item: null};
@@ -61,7 +33,7 @@ export class ToDoListComponent implements OnInit {
   }
 
   handleEdit(index: number) {
-    const item = this.toDoList[index].cloneToJson();
+    const item = this.toDoList[index].cloneToJson(true);
     // console.log({item});
     this.editable = {title: 'Editar tarea', index, item};
   }
@@ -84,30 +56,41 @@ export class ToDoListComponent implements OnInit {
     // console.log('ToDoListComponent -> editItemTime -> date', {date: this.editable.item.date});
   }
 
-  saveItem() {
+  saveItem(index, item) {
+    this.save({index, item});
+  }
+
+  handleSaveItem() {
     try {
       this.saving = true;
-      if (this.editable.index < 0) {
-        this.toDoListService.createToDo(
-          this.editable.item,
+      this.save(this.editable).then(() => {
+        this.hideModal();
+        this.saving = false;
+      }).catch((error) => {
+        console.error('ToDoListComponent -> handleSaveItem -> Promise catch:error', {error});
+        this.saving = false;
+      });
+    } catch (error) {
+      console.error('ToDoListComponent -> handleSaveItem -> catch:error', {error});
+      this.saving = false;
+    }
+  }
+
+  save(editable): Promise<any> {
+    try {
+      if (editable.index < 0) {
+        return this.toDoListService.createToDo(
+          editable.item,
           this.toDoList
-        ).then((createdItem) => {
-          // console.log('ToDoListComponent -> saveItem -> createdItem', {createdItem});
-          this.hideModal();
-          this.saving = false;
-        });
-      } else {
-        this.toDoListService.updateToDo(
-          {...this.editable.item, _id: this.toDoList[this.editable.index].getId()},
-          this.toDoList
-        ).then(index => {
-          this.hideModal();
-          this.saving = false;
-        });
+        );
       }
+      return this.toDoListService.updateToDo(
+        {...editable.item, _id: this.toDoList[editable.index].getId()},
+        this.toDoList
+      );
     } catch (error) {
       console.error('ToDoListComponent -> saveItem -> error', {error});
-      this.saving = false;
+      return Promise.reject(error);
     }
   }
 
