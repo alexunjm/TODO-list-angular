@@ -49,9 +49,9 @@ export class ToDoItem implements Item {
     this.name = data.name || '';
     this.priority = data.priority || 1;
     this.completed = data.completed || false;
-    this.date = data.date || new Date();
-    this.createdAt = data.createdAt || new Date();
-    this.updatedAt = data.updatedAt || new Date();
+    this.date = data.date ? new Date(data.date) : new Date();
+    this.createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
+    this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
   }
 
   getId(): string {

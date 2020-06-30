@@ -32,7 +32,7 @@ if(isProduction){
   mongoose.set('debug', true);
 }
 
-require('./models/User');
+require('./models/UserModel');
 require('./models/TaskModel');
 require('./config/passport');
 
