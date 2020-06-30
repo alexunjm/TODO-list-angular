@@ -1,0 +1,24 @@
+<style>
+  @media (min-width: 640px) {
+    .w-custom-behavior {
+      max-width: calc(100% - 292px);
+    }
+  }
+</style>
+<ng-content></ng-content>
+<span class="cursor-pointer w-custom-behavior" (click)="fireEditEvent()">
+  {{ item.getName() }}
+</span>
+<span class="flex-grow inline-block text-right mx-3">
+  <span class="inline-block mx-3 cursor-pointer text-left" style="min-width: 120px;" [ngSwitch]="true" (click)="fireEditEvent()">
+    <span style="min-width: 120px;" *ngSwitchCase="item.getPriority() < 4"><div class="inline-block m-1 rounded-full bg-red-500 w-2 h-2"></div>Prioridad baja</span>
+    <span style="min-width: 120px;" *ngSwitchCase="item.getPriority() >= 4 && item.getPriority() < 7"><div class="inline-block m-1 rounded-full bg-yellow-500 w-2 h-2"></div>Prioridad media</span>
+    <span style="min-width: 120px;" *ngSwitchDefault><div class="inline-block m-1 rounded-full bg-green-500 w-2 h-2"></div>Prioridad alta</span>
+  </span>
+  <span class="inline-block pl-2 text-center cursor-pointer" style="min-width: 75px;" (click)="fireEditEvent()">
+    {{ item.getDate() | date:'yyyy-MM-dd' }}
+  </span>
+  <span class="inline-block pl-2 text-center cursor-pointer" style="min-width: 40px;" (click)="fireEditEvent()">
+    {{ item.getDate() | date:'HH:mm' }}
+  </span>
+</span>

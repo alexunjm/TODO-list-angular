@@ -1,0 +1,84 @@
+<style>
+  .task-header > h1 {
+    letter-spacing: 2px;
+  }
+  .custom-plus {
+    line-height: 0px;
+    box-sizing: content-box;
+    padding: 0 16px 4px;
+  }
+</style>
+
+<div class="task-header relative mb-5">
+  <h1 class="text-right align-baseline font-bold text-xl text-gray-700 mx-8 mt-8">
+    Tareas
+  </h1>
+  <hr>
+  <a class="custom-plus sticky bottom-0 right-0 m-4 rounded-full bg-blue-400 hover:bg-blue-400 shadow-lg text-5xl text-white cursor-pointer"
+  (click)="handleCreate()">+</a>
+</div>
+<ul class="list-none">
+  <li *ngFor="let item of toDoList; index as i">
+    <app-item [item]="item" (handleEdit)="handleEdit(i)" (handleDelete)="handleDelete(i)">
+      <app-markable-item class="flex-grow" [item]="item">
+        <app-editable-item class="flex flex-col-reverse sm:flex-row" [item]="item" (handleEdit)="handleEdit(i)">
+        </app-editable-item>
+      </app-markable-item>
+    </app-item>
+  </li>
+</ul>
+
+<app-modal [data]="editable" [hidden]="!editable.title" (handleCloseEvent)="hideModal()">
+
+  <form class="bg-gray-100 py-6 px-4" *ngIf="editable.item">
+    <div class="flex flex-wrap -mx-1 mb-6">
+      <div class="w-full md:w-1/4 px-1 mb-1 md:mb-0">
+        <label
+          class="block tracking-wide text-gray-700 text-sm font-bold mb-2"
+          for="priority">
+          Priority
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="priority" type="number" placeholder="1"
+          (blur)="editable.item.priority = $event.target.value"
+          [value]="editable.item.priority" >
+      </div>
+      <div class="w-full md:w-3/4 px-1 mb-1 md:mb-0">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+          Name
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="name" type="text" placeholder="deploy microservice"
+          (blur)="editable.item.name = $event.target.value"
+          [value]="editable.item.name" >
+      </div>
+    </div>
+    <div class="flex flex-wrap -mx-1 mb-6">
+      <div class="w-full md:w-1/2 px-1 mb-1 md:mb-0">
+        <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="due-date">
+          Due Date
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="due-date" type="date" placeholder="Doe"
+          (blur)="editItemDate($event.target.value)"
+          [value] ="editable.item.date | date:'yyyy-MM-dd'" >
+      </div>
+      <div class="w-full md:w-1/2 px-1 mb-1 md:mb-0">
+        <label class="block tracking-wide text-gray-700 text-sm font-bold mb-2" for="time">
+          Time
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="time" type="time" placeholder="Doe"
+          (blur)="editItemTime($event.target.value)"
+          [value] ="editable.item.date | date:'HH:mm'" >
+      </div>
+    </div>
+    <div class="flex items-center justify-end">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button" (click)="saveItem()" [disabled]="saving">
+        Save
+      </button>
+    </div>
+  </form>
+</app-modal>

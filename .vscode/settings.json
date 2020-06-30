@@ -8,5 +8,11 @@
             "name": "release/structure",
             "base": "develop"
         }
+    ],
+    "gitflow4code.features": [
+        {
+            "name": "feature/todo-list",
+            "base": "develop"
+        }
     ]
 }
