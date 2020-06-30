@@ -97,10 +97,10 @@ export class ToDoItem implements Item {
     this.completed = val;
   }
   isDueSoon(): boolean {
-    return (Date.now() - this.date.getTime()) < (1000 /* ms */ * 60 /* seg */ * 60/* min */);
+    return !this.completed && (Date.now() - this.date.getTime()) < (1000 /* ms */ * 60 /* seg */ * 60/* min */);
   }
   isOverdue(): boolean {
-    return Date.now() > this.date.getTime();
+    return !this.completed && Date.now() > this.date.getTime();
   }
   cloneToJson(copy = false) {
     const clone = {
