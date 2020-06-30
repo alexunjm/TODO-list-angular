@@ -21,6 +21,14 @@
         {
             "name": "feature/todo-list",
             "base": "develop"
+        },
+        {
+            "name": "feature/web-in-server",
+            "base": "release/persistence"
+        },
+        {
+            "name": "feature/alerts",
+            "base": "develop"
         }
     ]
 }

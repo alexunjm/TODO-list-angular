@@ -12,16 +12,31 @@ import { DateHelperService, ToDoListService, ToDoListMockService } from '../../s
 export class ToDoListComponent implements OnInit {
 
   toDoList: Array<Item>;
+
   editable: {title: string, index: number, item: any};
   saving = false;
 
+  counter = {isOverdue: 0, dueSoon: 0};
+
   // constructor(private toDoListService: ToDoListMockService, private dateHelper: DateHelperService) {
   constructor(private toDoListService: ToDoListService, private dateHelper: DateHelperService) {
-    this.toDoListService.getAll().then(list => this.toDoList = list);
-    this.hideModal();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.toDoListService.getAll().then(list => {
+      // this.counter = {isOverdue: 0, dueSoon: 0};
+      this.toDoList = list;
+      this.toDoList.forEach(item => {
+        if (item.isDueSoon()) {
+          this.counter.dueSoon++;
+        } else if (item.isOverdue()) {
+          this.counter.isOverdue++;
+        }
+      });
+      console.log("ToDoListComponent -> ngOnInit -> this.counter", this.counter)
+    });
+    this.hideModal();
+  }
 
   hideModal() {
     this.editable = {title: null, index: -1, item: null};
