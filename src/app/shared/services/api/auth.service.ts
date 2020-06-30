@@ -14,23 +14,25 @@ export class AuthService extends ApiService {
     this.setAPIuri('http://localhost:3000');
   }
 
-  singIn({email, password}) {
-    return this.post('users/login', {email, password}).then(response => {
+  singIn({email, pass}) {
+    const user = {email, password: pass};
+    return this.post('users/login', {user}).then(response => {
       this.lStorage.set('user', response['user']);
       return Promise.resolve(true);
     }).catch(err => {
-      console.log('AuthService -> singIn -> err', {err});
+      console.log('AuthService -> singIn -> err', {err, user});
       return Promise.reject(false);
     });
   }
 
-  singUp({email, password}) {
-    return this.post('users', {email, password}).then(response => {
+  singUp({name, email, pass}) {
+    const user = {username: name, email, password: pass};
+    return this.post('users', {user}).then(response => {
       // for auto-login
       this.lStorage.set('user', response['user']);
       return Promise.resolve(true);
     }).catch(err => {
-      console.log('AuthService -> singUp -> err', {err});
+      console.log('AuthService -> singUp -> err', {err, user});
       return Promise.reject(false);
     });
   }
