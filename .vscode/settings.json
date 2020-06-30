@@ -11,6 +11,10 @@
         {
             "name": "release/api-server",
             "base": "develop"
+        },
+        {
+            "name": "release/persistence",
+            "base": "develop"
         }
     ],
     "gitflow4code.features": [
