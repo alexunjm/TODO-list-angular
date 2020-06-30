@@ -7,14 +7,17 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  valid: {name: boolean, email: boolean, pass: boolean, all: boolean} = {name: true, email: true, pass: true, all: true};
-  user: {name?: string, email?: string, pass?: string} = {name: '', email: '', pass: ''};
-
-  constructor() {
-  }
+  valid: {email: boolean, pass: boolean, all: boolean} = {email: true, pass: true, all: true};
+  user: {email?: string, pass?: string} = {email: '', pass: ''};
 
   @Output()
   hideLogin: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  handleSignIn: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor() {
+  }
 
   hideLoginClick() {
     this.hideLogin.emit('clicked!');
@@ -37,9 +40,11 @@ export class LoginComponent implements OnInit {
     }
 
     if (this.valid.all) {
+      this.handleSignIn.emit(this.user);
+      /*
       console.log('puede iniciar');
     } else {
-      console.log('------NO puede iniciar');
+      console.log('------NO puede iniciar'); */
     }
   }
 }

@@ -13,4 +13,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  signUpOption(user) {
+    console.log("HomeComponent -> signUpOption -> user", user);
+  }
+
+  signInOption(user) {
+    console.log("HomeComponent -> signInOption -> user", user);
+  }
+
 }

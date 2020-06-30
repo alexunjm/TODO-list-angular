@@ -10,11 +10,14 @@ export class SignUpComponent implements OnInit {
   valid: {name: boolean, email: boolean, pass: boolean, all: boolean} = {name: true, email: true, pass: true, all: true};
   user: {name?: string, email?: string, pass?: string} = {name: '', email: '', pass: ''};
 
-  constructor() {
-  }
-
   @Output()
   hideSignUp: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  handleSignUp: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor() {
+  }
 
   hideSignUpClick() {
     this.hideSignUp.emit('clicked!');
@@ -41,9 +44,11 @@ export class SignUpComponent implements OnInit {
     }
 
     if (this.valid.all) {
+      this.handleSignUp.emit(this.user);
+      /*
       console.log('puede iniciar');
     } else {
-      console.log('------NO puede iniciar');
+      console.log('------NO puede iniciar'); */
     }
   }
 
