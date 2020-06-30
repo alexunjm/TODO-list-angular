@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { NmbToArr } from '../../shared/pipes/format/format';
 import { Item } from '../../shared/business';
-import { DateHelperService, ToDoListMockService } from '../../shared/services';
+import { DateHelperService, ToDoListService, ToDoListMockService } from '../../shared/services';
 
 @Component({
   templateUrl: './todo-list.component.html',
@@ -15,7 +15,8 @@ export class ToDoListComponent implements OnInit {
   editable: {title: string, index: number, item: any};
   saving = false;
 
-  constructor(private toDoListService: ToDoListMockService, private dateHelper: DateHelperService) {
+  // constructor(private toDoListService: ToDoListMockService, private dateHelper: DateHelperService) {
+  constructor(private toDoListService: ToDoListService, private dateHelper: DateHelperService) {
     this.toDoListService.getAll().then(list => this.toDoList = list);
     this.hideModal();
   }

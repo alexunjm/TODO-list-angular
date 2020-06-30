@@ -13,6 +13,10 @@
         {
             "name": "feature/todo-list",
             "base": "develop"
+        },
+        {
+            "name": "feature/api-service",
+            "base": "develop"
         }
     ]
 }
