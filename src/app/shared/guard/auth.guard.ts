@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
 import { LStorageService/* , ApiProvider */ } from '../services';
+import { AuthService } from '../services/api/auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -9,24 +10,25 @@ export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
         private lsProvider: LStorageService,
-        // private apiProvider: ApiProvider
+        private authService: AuthService
     ) { }
 
     async canActivate() {
         try {
 
             const localUser = this.lsProvider.get('user') || {};
+            // console.log('AuthGuard -> canActivate -> localUser', localUser);
             if (localUser.token && localUser.token.length > 1) {
-                // const resp = await this.apiProvider.get('user', {});
-                const resp = {status: true, user: {_id: 'sampleid'}};
-                const user = resp['status'] ? resp['user'] : {};
-                return localUser['_id']
-                  && localUser['_id'].length > 0
-                  && user['_id'] === localUser['_id'];
+                const resp = await this.authService.get('user', {});
+                const user = resp['user'];
+                const itsOk = localUser.email
+                  && localUser.email.length > 0
+                  && user.email === localUser.email;
+                if (itsOk) {return true; }
             }
 
             this.router.navigate(['/home']);
-            return;
+            return false;
         } catch (error) {
 
         }
